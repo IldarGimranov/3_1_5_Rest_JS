@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<h1>Confirm the deletion of the user?</h1>
+<h1>Delete a user?</h1>
 <form th:method="POST" th:action="@{'/admin/deleteuser?id=' + ${user.getId()}}" th:object="${user}">
     <input type="submit" value="Yes"/>
 </form>

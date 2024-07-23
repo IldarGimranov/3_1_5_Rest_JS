@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
- //   @Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException { //возвращаем по запросу имя пользователя по пришедшемму имени(перегоняем наших юзеров юзерам которые понимает спринг)
         User user = findByUsername(name);
         if (user == null) {
@@ -61,13 +61,13 @@ public class UserServiceImpl implements UserService {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
-   // @Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     @Override
     public List<User> readAllUsers() {
         return userRepository.findAll();
     }
 
-    // @Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     @Override
     public User readUserById(Long id) {
         Optional<User> user = userRepository.findById(id);
