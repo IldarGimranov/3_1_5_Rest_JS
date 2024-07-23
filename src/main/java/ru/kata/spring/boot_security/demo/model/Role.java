@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.Set;
 
 @Entity
-@Table (name = "roles")
+@Table(name = "roles")
 public class Role implements GrantedAuthority {
 
     @Id
@@ -25,15 +25,11 @@ public class Role implements GrantedAuthority {
     private String name;
 
     @Transient
-    @ManyToMany (mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles")
     private Collection<User> users;
 
     public Role() {
     }
-
-//    public Role(Long id) {
-//        this.id = id;
-//    }
 
     public Role(Long id, String name) {
         //this.id = id;
@@ -69,11 +65,6 @@ public class Role implements GrantedAuthority {
         //return getName();
         return name;
     }
-
-//    public Role(Long id, String name) {
-//        this.id = id;
-//        this.name = name;
-//    }
 
     @Override
     public String toString() {

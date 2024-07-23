@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -71,16 +70,16 @@ public class AdminController {
 
     @GetMapping("/update")
     public String update(Model model,
-                             @RequestParam("id") Long id) {
+                         @RequestParam("id") Long id) {
         model.addAttribute(userService.readUserById(id));
         return "update";
     }
 
     @PostMapping("/updateuser")
     public String updateUser(@ModelAttribute("user") @Valid User user,
-                         BindingResult bindingResult,
-                         @RequestParam("role") String selectedRole,
-                         @RequestParam("id") Long id) {
+                             BindingResult bindingResult,
+                             @RequestParam("role") String selectedRole,
+                             @RequestParam("id") Long id) {
         if (bindingResult.hasErrors()) {
             return "update";
         }

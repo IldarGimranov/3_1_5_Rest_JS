@@ -14,7 +14,9 @@ public class RoleServiceImpl implements RoleService {
     private RoleRepository roleRepository;
 
     @Autowired
-    public void setRoleRepository(RoleRepository roleRepository) { this.roleRepository = roleRepository; }
+    public void setRoleRepository(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
 
     @Override
     public void addRole(Role role) {
