@@ -47,7 +47,14 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-
+    public User(long id, String name, String lastName, int year, String password, Collection<Role> roles) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.year = year;
+        this.password = password;
+        this.roles = roles;
+    }
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
@@ -55,19 +62,12 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
 
-//    public User(String name, String lastName, int year) {
-//        this.name = name;
-//        this.lastName = lastName;
-//        this.year = year;
-//    }
-
-//    public User() {
-//    }
+    public User() {
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
-        //return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList()); //из пачки ролей делает пачку авторитис с такими же строками
+        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList()); //из пачки ролей делает пачку авторитис с такими же строками
     }
 
     public long getId() { return id; }
@@ -95,31 +95,6 @@ public class User implements UserDetails {
 
     public void setRoles(Collection<Role> roles) { this.roles = roles; }
 
-//    @Override
-//    public String toString() {
-//        return "User{" +
-//                "id=" + id +
-//                ", name='" + name + '\'' +
-//                ", lastName='" + lastName + '\'' +
-//                ", year=" + year +
-//                ", password='" + password + '\'' +
-//        // ", passwordConfirm='" + passwordConfirm + '\'' +
-//                ", roles=" + roles +
-//                '}';
-//    }
-
-//    public User(long id, String name, String lastName, int year, String password, String passwordConfirm, Set<Role> roles) {
-//        this.id = id;
-//        this.name = name;
-//        this.lastName = lastName;
-//        this.year = year;
-//        this.password = password;
-////        this.passwordConfirm = passwordConfirm;
-//        this.roles = roles;
-//    }
-
-
-
     @Override
     public String getUsername() { return name; }
 
@@ -135,14 +110,4 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() { return true; }
 
-//    @Transient
-//    private String passwordConfirm;
-
- //   public String getPasswordConfirm() {
-//        return passwordConfirm;
-//    }
-//
-//    public void setPasswordConfirm(String passwordConfirm) {
-//        this.passwordConfirm = passwordConfirm;
-//    }
 }
