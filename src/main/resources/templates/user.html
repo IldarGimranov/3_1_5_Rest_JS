@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en">
 <head>
-    <title>Spring Security Example</title>
+    <meta charset="UTF-8">
+    <title></title>
 </head>
 <body>
-
-<h1>User, welcome spring boot security page!</h1>
-
-<h1>Your info:</h1>
 
 <table border="1">
     <thead>
@@ -19,12 +17,13 @@
     </tr>
     </thead>
     <tbody>
-    <td th:text="${user.id}"></td>
-    <td th:text="${user.name}"></td>
-    <td th:text="${user.lastName}"></td>
-    <td th:text="${user.year}"></td>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.lastName}"></td>
+        <td th:text="${user.year}"></td>
+    </tr>
 </table>
-
 <input type="button" value="Log out" onclick="window.location.href = '/logout'"/>
 
 </body>

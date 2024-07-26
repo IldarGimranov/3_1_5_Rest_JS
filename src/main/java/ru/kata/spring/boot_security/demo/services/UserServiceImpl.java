@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.service;
+package ru.kata.spring.boot_security.demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,9 +8,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.model.Role;
-import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.repositories.UserRepository;
+import ru.kata.spring.boot_security.demo.models.Role;
+import ru.kata.spring.boot_security.demo.models.User;
+import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Collection;
@@ -37,22 +37,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByName(name);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException { //возвращаем по запросу имя пользователя по пришедшемму имени(перегоняем наших юзеров юзерам которые понимает спринг)
-        User user = findByUsername(name);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found exception"); //если такой пользователь не нашелся
-        }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(),
-                user.getPassword(),
-                mapRolesToAuthorities(user.getRoles()));
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
-    }
 
     @Transactional(readOnly = true)
     @Override
@@ -64,7 +48,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User readUserById(Long id) {
         Optional<User> user = userRepository.findById(id);
-        return user.orElse(new User());
+        return user.orElseThrow(() -> new EntityNotFoundException("User not found"));
+        // return user.orElse(new User());
     }
 
     @Transactional
@@ -87,6 +72,7 @@ public class UserServiceImpl implements UserService {
             user1.setYear(user.getYear());
             user1.setPassword(user.getPassword());
             user1.setRoles(user.getRoles());
+            //user1.setPassword(user.getPassword());
             userRepository.save(user1);
         } catch (NullPointerException e) {
             throw new EntityNotFoundException();

@@ -1,24 +1,20 @@
-package ru.kata.spring.boot_security.demo.service;
+package ru.kata.spring.boot_security.demo.services;
 
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import ru.kata.spring.boot_security.demo.model.Role;
-import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.models.Role;
+import ru.kata.spring.boot_security.demo.models.User;
 
 import java.util.Collection;
 import java.util.List;
 
-public interface UserService extends UserDetailsService {
+public interface UserService {
 
 
     User findByUsername(String name);
-
-    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
-
-    Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles);
 
     List<User> readAllUsers();
 

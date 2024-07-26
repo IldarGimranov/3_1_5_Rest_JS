@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.model;
+package ru.kata.spring.boot_security.demo.models;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -44,7 +44,7 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    public User(long id, String name, String lastName, int year, String password, Collection<Role> roles) {
+    public User(Long id, String name, String lastName, int year, String password, Collection<Role> roles) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -53,7 +53,7 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany()
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -141,4 +141,15 @@ public class User implements UserDetails {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", year=" + year +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
+    }
 }
