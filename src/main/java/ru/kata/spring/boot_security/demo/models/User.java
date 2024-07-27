@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.util.Collection;
@@ -29,7 +30,7 @@ public class User implements UserDetails {
     private long id;
 
     @Size(min = 2, max = 50, message = "Слишком короткое или длинное имя")
-    @Column(name = "name")
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
     @Size(min = 2, max = 50, message = "Слишком короткая или длинная фамилия")

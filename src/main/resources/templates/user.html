@@ -14,6 +14,7 @@
         <th>Name</th>
         <th>LastName</th>
         <th>Year</th>
+        <th>Role</th>
     </tr>
     </thead>
     <tbody>
@@ -22,6 +23,7 @@
         <td th:text="${user.name}"></td>
         <td th:text="${user.lastName}"></td>
         <td th:text="${user.year}"></td>
+        <td th:text="${user.roles}"></td>
     </tr>
 </table>
 <input type="button" value="Log out" onclick="window.location.href = '/logout'"/>
