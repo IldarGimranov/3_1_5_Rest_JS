@@ -49,7 +49,6 @@ public class UserServiceImpl implements UserService {
     public User readUserById(Long id) {
         Optional<User> user = userRepository.findById(id);
         return user.orElseThrow(() -> new EntityNotFoundException("User not found"));
-        // return user.orElse(new User());
     }
 
     @Transactional
@@ -72,7 +71,6 @@ public class UserServiceImpl implements UserService {
             user1.setYear(user.getYear());
             user1.setPassword(user.getPassword());
             user1.setRoles(user.getRoles());
-            //user1.setPassword(user.getPassword());
             userRepository.save(user1);
         } catch (NullPointerException e) {
             throw new EntityNotFoundException();
