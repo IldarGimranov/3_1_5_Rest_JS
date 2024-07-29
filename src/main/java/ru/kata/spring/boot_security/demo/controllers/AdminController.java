@@ -48,9 +48,9 @@ public class AdminController {
             return "create";
         }
         if (selectedRole.equals("ROLE_USER")) {
-            user.setRoles(roleService.findByName("ROLE_USER"));
+            user.setAuthorities(roleService.findByUsername("ROLE_USER"));
         } else if (selectedRole.equals("ROLE_ADMIN")) {
-            user.setRoles(roleService.findAll());
+            user.setAuthorities(roleService.findAll());
         }
         userService.saveUser(user);
         return "redirect:/admin";
@@ -84,9 +84,9 @@ public class AdminController {
             return "update";
         }
         if (selectedRole.equals("ROLE_USER")) {
-            user.setRoles(roleService.findByName("ROLE_USER"));
+            user.setAuthorities(roleService.findByUsername("ROLE_USER"));
         } else if (selectedRole.equals("ROLE_ADMIN")) {
-            user.setRoles(roleService.findAll());
+            user.setAuthorities(roleService.findAll());
         }
         userService.updateUser(id, user);
         return "redirect:/admin";

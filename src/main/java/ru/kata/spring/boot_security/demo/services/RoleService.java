@@ -11,5 +11,5 @@ public interface RoleService {
 
     List<Role> findAll();
 
-    Collection<Role> findByName(String name);
+    Collection<Role> findByUsername(String username);
 }

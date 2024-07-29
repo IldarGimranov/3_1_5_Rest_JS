@@ -30,8 +30,8 @@ public class User implements UserDetails {
     private long id;
 
     @Size(min = 2, max = 50, message = "Слишком короткое или длинное имя")
-    @Column(name = "name", unique = true, nullable = false)
-    private String name;
+    @Column(name = "username", unique = true, nullable = false)
+    private String username;
 
     @Size(min = 2, max = 50, message = "Слишком короткая или длинная фамилия")
     @Column(name = "lastname")
@@ -45,27 +45,27 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    public User(Long id, String name, String lastName, int year, String password, Collection<Role> roles) {
+    public User(Long id, String username, String lastName, int year, String password, Collection<Role> authorities) {
         this.id = id;
-        this.name = name;
+        this.username = username;
         this.lastName = lastName;
         this.year = year;
         this.password = password;
-        this.roles = roles;
+        this.authorities = authorities;
     }
 
     @ManyToMany()
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Collection<Role> roles;
+    private Collection<Role> authorities;
 
     public User() {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList()); //из пачки ролей делает пачку авторитис с такими же строками
+    public Collection<Role> getAuthorities() {
+        return authorities; //из пачки ролей делает пачку авторитис с такими же строками
     }
 
     public long getId() {
@@ -76,12 +76,8 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getLastName() {
@@ -109,17 +105,13 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public Collection<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Collection<Role> roles) {
-        this.roles = roles;
+    public void setAuthorities(Collection<Role> authorities) {
+        this.authorities = authorities;
     }
 
     @Override
     public String getUsername() {
-        return name;
+        return username;
     }
 
     @Override
@@ -146,11 +138,11 @@ public class User implements UserDetails {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", year=" + year +
                 ", password='" + password + '\'' +
-                ", roles=" + roles +
+                ", authorities=" + authorities +
                 '}';
     }
 }

@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder);
+        daoAuthenticationProvider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
         daoAuthenticationProvider.setUserDetailsService(userDetailsServiceImpl); //предоставляет Юзеров
         return daoAuthenticationProvider;
     }

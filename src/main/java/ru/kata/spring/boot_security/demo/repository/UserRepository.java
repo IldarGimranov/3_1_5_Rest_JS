@@ -6,5 +6,5 @@ import ru.kata.spring.boot_security.demo.models.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByName(String name);
+    User findByUsername(String username);
 }
