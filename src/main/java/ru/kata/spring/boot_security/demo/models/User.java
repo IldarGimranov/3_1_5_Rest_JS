@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.models;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.kata.spring.boot_security.demo.utils.UserUtil;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -54,7 +55,7 @@ public class User implements UserDetails {
         this.authorities = authorities;
     }
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -66,6 +67,10 @@ public class User implements UserDetails {
     @Override
     public Collection<Role> getAuthorities() {
         return authorities; //из пачки ролей делает пачку авторитис с такими же строками
+    }
+
+    public String getStringRole() {
+        return UserUtil.getStringRoles(authorities);
     }
 
     public long getId() {

@@ -26,9 +26,4 @@ public class UserController {
         model.addAttribute("users", userService.findByUsername(principal.getName()));
         return "user";
     }
-
-    @GetMapping("/users")
-    public String index() {
-        return "index";
-    }
 }
