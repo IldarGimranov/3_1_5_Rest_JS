@@ -19,6 +19,11 @@
     <div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">LastName Error</div>
     <br/>
 
+    <label for="email">Enter new email: </label>
+    <input type="text" th:field="*{email}" id="email"/>
+    <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
+    <br/>
+
     <label for="year">Enter new year: </label>
     <input type="text" th:field="*{year}" id="year"/>
     <div style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Year Error</div>

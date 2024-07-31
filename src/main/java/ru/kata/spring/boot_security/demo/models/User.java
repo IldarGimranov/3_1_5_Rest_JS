@@ -50,13 +50,18 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    public User(Long id, String username, String lastName, int year, String password, Collection<Role> authorities) {
+    @Size(min = 5, message = "Слишком короткий e'mail")
+    @Column(name = "email")
+    private String email;
+
+    public User(Long id, String username, String lastName, int year, String password, Collection<Role> authorities, String email) {
         this.id = id;
         this.username = username;
         this.lastName = lastName;
         this.year = year;
         this.password = password;
         this.authorities = authorities;
+        this.email = email;
     }
 
     @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
@@ -105,6 +110,14 @@ public class User implements UserDetails {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
