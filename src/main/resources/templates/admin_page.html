@@ -125,7 +125,7 @@
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <form th:method="POST"
-                                                                              th:action="@{'/admin/updateauser?id=' + ${user.getId()}}"
+                                                                              th:action="@{'/admin/updateuser?id=' + ${user.getId()}}"
                                                                               th:object="${user}">
                                                                             <div class="mb-3">
                                                                                 <label for="id"
@@ -234,7 +234,7 @@
                                                                     </div>
                                                                     <div class="card-body text-center">
                                                                         <form th:method="POST"
-                                                                              th:action="@{'/admin/deleteauser?id=' + ${user.getId()}}"
+                                                                              th:action="@{'/admin/deleteuser?id=' + ${user.getId()}}"
                                                                               th:object="${user}">
 
                                                                             <div class="modal-body col-7 mx-auto text-center">
@@ -313,7 +313,7 @@
                                             Add new user</h5>
                                     </div>
                                     <div class="card-body col-5 mx-auto text-center mt-3">
-                                        <form th:method="POST" th:action="@{/admin/createauser}" th:object="${admin}">
+                                        <form th:method="POST" th:action="@{/admin/createuser}" th:object="${admin}">
                                             <label for="NameCreate" class="form-label fw-bold mb-0">First
                                                 name</label>
                                             <input type="text" class="form-control" id="NameCreate"
@@ -341,10 +341,10 @@
                                                 <label for="roleCreate">Role</label>
                                                 <br>
                                                 <select id="roleCreate" name="role">
-                                                    <option value="USER">USER
+                                                    <option value="ROLE_USER">USER
                                                     </option>
                                                     </option>
-                                                    <option value="ADMIN">ADMIN
+                                                    <option value="ROLE_ADMIN">ADMIN
                                                     </option>
                                                 </select>
                                             </div>
