@@ -37,13 +37,6 @@ public class AdminController {
         return "admin_page";
     }
 
-//    @GetMapping("/create")
-//    public String create(Model model) {
-//        model.addAttribute("user", new User());
-//        model.addAttribute("roles", roleService.findAll());
-//        return "create";
-//    }
-
     @PostMapping("/createuser")
     public String createUser(@ModelAttribute("user") @Valid User user,
                              BindingResult bindingResult, @RequestParam("role") String selectedRole) {
@@ -59,24 +52,11 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-//    @GetMapping("/delete")
-//    public String delete(Model model, @RequestParam("id") Long id) {
-//        model.addAttribute(userService.readUserById(id));
-//        return "delete";
-//    }
-
     @PostMapping("/deleteuser")
     public String deleteUser(@RequestParam("id") Long id) {
         userService.deleteUser(id);
         return "redirect:/admin";
     }
-
-//    @GetMapping("/update")
-//    public String update(Model model,
-//                         @RequestParam("id") Long id) {
-//        model.addAttribute(userService.readUserById(id));
-//        return "update";
-//    }
 
     @PostMapping("/updateuser")
     public String updateUser(@ModelAttribute("user") @Valid User user,
@@ -86,9 +66,9 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "admin_page";
         }
-        if (selectedRole.equals("ROLE_USER")) {
+        if (selectedRole.equals("USER")) {
             user.setAuthorities(roleService.findByUsername("ROLE_USER"));
-        } else if (selectedRole.equals("ROLE_ADMIN")) {
+        } else if (selectedRole.equals("ADMIN")) {
             user.setAuthorities(roleService.findAll());
         }
         userService.updateUser(id, user);
