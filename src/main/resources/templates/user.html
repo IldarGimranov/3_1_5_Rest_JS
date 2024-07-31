@@ -20,10 +20,10 @@
     <tbody>
     <tr th:each="user : ${users}">
         <td th:text="${user.id}"></td>
-        <td th:text="${user.name}"></td>
+        <td th:text="${user.username}"></td>
         <td th:text="${user.lastName}"></td>
         <td th:text="${user.year}"></td>
-        <td th:text="${user.roles}"></td>
+        <td th:text="${user.getStringRole()}"></td>
     </tr>
 </table>
 <input type="button" value="Log out" onclick="window.location.href = '/logout'"/>
