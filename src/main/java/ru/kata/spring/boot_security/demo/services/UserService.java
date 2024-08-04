@@ -20,9 +20,9 @@ public interface UserService {
 
     User readUserById(Long id);
 
-    void saveUser(User user);
+    void saveUser(User user, List<String> roles);
 
-    void updateUser(Long id, User user);
+    void updateUser(User user, List<String> roles);
 
     void deleteUser(Long id);
 

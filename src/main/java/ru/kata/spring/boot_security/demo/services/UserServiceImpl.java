@@ -46,25 +46,27 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void saveUser(User user) {
-        if (user.getAuthorities() == null || user.getAuthorities().isEmpty()) {
-            user.setAuthorities(roleService.findByUsername("ROLE_USER"));
-        }
+    public void saveUser(User user, List<String> roles) {
+        user.setAuthorities(roleService.getRoles(roles));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
     @Transactional
     @Override
-    public void updateUser(Long id, User user) {
+    public void updateUser(User user, List<String> roles) {
         try {
-            User user1 = readUserById(id);
+            User user1 = readUserById(user.getId());
             user1.setUsername(user.getUsername());
             user1.setLastName(user.getLastName());
             user1.setYear(user.getYear());
             user1.setEmail(user.getEmail());
-            user1.setPassword(user.getPassword());
-            user1.setAuthorities(user.getAuthorities());
+            String actualPassword = user1.getPassword();
+            String newPassword = user.getPassword();
+            if (!actualPassword.equals(newPassword)) {
+                user1.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            }
+            user1.setAuthorities(roleService.getRoles(roles));
             userRepository.save(user1);
         } catch (NullPointerException e) {
             throw new EntityNotFoundException();
