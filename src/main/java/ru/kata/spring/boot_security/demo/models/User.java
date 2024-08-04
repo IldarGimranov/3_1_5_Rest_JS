@@ -1,13 +1,13 @@
 package ru.kata.spring.boot_security.demo.models;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.kata.spring.boot_security.demo.utils.UserUtil;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -61,9 +61,8 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @Fetch(FetchMode.JOIN)
-    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Cascade({CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
