@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.models;
 
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Column;

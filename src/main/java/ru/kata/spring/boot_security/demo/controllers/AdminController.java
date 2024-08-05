@@ -53,7 +53,7 @@ public class AdminController {
     @PostMapping("/updateuser")
     public String updateUser(@ModelAttribute("user") @Valid User user,
                              BindingResult bindingResult,
-                             @RequestParam("role")List<String> roles,
+                             @RequestParam("role") List<String> roles,
                              @RequestParam("id") Long id) {
         if (bindingResult.hasErrors()) {
             return "admin_page";
