@@ -1,5 +1,7 @@
 package ru.kata.spring.boot_security.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,26 +28,32 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @JsonProperty("id")
     private long id;
 
     @Size(min = 2, max = 50, message = "Слишком короткое или длинное имя")
     @Column(name = "username", unique = true, nullable = false)
+    @JsonProperty("username")
     private String username;
 
     @Size(min = 2, max = 50, message = "Слишком короткая или длинная фамилия")
     @Column(name = "lastname")
+    @JsonProperty("lastName")
     private String lastName;
 
     @Min(value = 0, message = "Год не может быть меньше 0")
     @Column(name = "year")
+    @JsonProperty("year")
     private int year;
 
     @Size(min = 3, message = "Не менее 3-х знаков")
     @Column(name = "password")
+    @JsonProperty("password")
     private String password;
 
     @Size(min = 5, message = "Слишком короткий e'mail")
     @Column(name = "email")
+    @JsonProperty("email")
     private String email;
 
     public User(Long id, String username, String lastName, int year, String password, Collection<Role> authorities, String email) {
@@ -126,26 +134,31 @@ public class User implements UserDetails {
         this.authorities = authorities;
     }
 
+    @JsonIgnore
     @Override
     public String getUsername() {
         return username;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;
