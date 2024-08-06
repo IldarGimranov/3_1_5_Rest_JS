@@ -26,9 +26,9 @@ modalEdit.addEventListener("submit", async function (event) {
 
     let user = {
         id: document.getElementById("idEdit").value,
-        firstName: document.getElementById("firstNameEdit").value,
+        username: document.getElementById("usernameEdit").value,
         lastName: document.getElementById("lastNameEdit").value,
-        age: document.getElementById("ageEdit").value,
+        year: document.getElementById("yearEdit").value,
         email: document.getElementById("emailEdit").value,
         password: document.getElementById("passwordEdit").value,
         roles: roles

@@ -13,9 +13,9 @@ async function fillModal(modal) {
         const modalBody = modal.querySelector(".modal-body");
 
         const idInput = modalBody.querySelector("input[data-user-id='id']");
-        const firstNameInput = modalBody.querySelector("input[data-user-id='firstName']");
+        const usernameInput = modalBody.querySelector("input[data-user-id='username']");
         const lastNameInput = modalBody.querySelector("input[data-user-id='lastName']");
-        const ageInput = modalBody.querySelector("input[data-user-id='age']");
+        const yearInput = modalBody.querySelector("input[data-user-id='year']");
         const emailInput = modalBody.querySelector("input[data-user-id='email']");
         const passwordInput = modalBody.querySelector("input[data-user-id='password']");
         if (passwordInput !== null) {
@@ -23,9 +23,9 @@ async function fillModal(modal) {
         }
 
         idInput.value = user.id;
-        firstNameInput.value = user.firstName;
+        usernameInput.value = user.username;
         lastNameInput.value = user.lastName;
-        ageInput.value = user.age;
+        yearInput.value = user.year;
         emailInput.value = user.email;
 
 

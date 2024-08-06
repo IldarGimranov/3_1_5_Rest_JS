@@ -9,13 +9,13 @@ async function addNewUserForm() {
     newUserForm.addEventListener('submit', async function (event) {
         event.preventDefault();
 
-        const firstName = newUserForm.querySelector("#firstName").value.trim();
+        const username = newUserForm.querySelector("#userName").value.trim();
         const lastName = newUserForm.querySelector("#lastName").value.trim();
-        const age = newUserForm.querySelector("#age").value.trim();
+        const year = newUserForm.querySelector("#year").value.trim();
         const email = newUserForm.querySelector("#email").value.trim();
         const password = newUserForm.querySelector("#password").value.trim();
 
-        const rolesSelected = document.getElementById("roles");
+        const rolesSelected = document.getElementById("authorities");
 
         let roles = [];
         for (let option of rolesSelected.selectedOptions) {
@@ -27,9 +27,9 @@ async function addNewUserForm() {
         }
 
         const newUserData = {
-            firstName: firstName,
+            username: username,
             lastName: lastName,
-            age: age,
+            year: year,
             email: email,
             password: password,
             roles: roles

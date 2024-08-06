@@ -17,9 +17,9 @@ async function fillTableOfAllUsers() {
         usersTableHTML +=
             `<tr>
                 <td>${user.id}</td>
-                <td>${user.firstName}</td>
+                <td>${user.username}</td>
                 <td>${user.lastName}</td>
-                <td>${user.age}</td>
+                <td>${user.year}</td>
                 <td>${user.password}</td>
                 <td>${user.roles.map(role => role.shortName).join(' ')}</td>
                 <td>
@@ -49,9 +49,9 @@ async function fillTableAboutCurrentUser(){
     currentUserTableHTML +=
         `<tr>
             <td>${currentUser.id}</td>
-            <td>${currentUser.firstName}</td>
+            <td>${currentUser.username}</td>
             <td>${currentUser.lastName}</td>
-            <td>${currentUser.age}</td>
+            <td>${currentUser.year}</td>
             <td>${currentUser.password}</td>
             <td>${currentUser.roles.map(role => role.shortName).join(' ')}</td>
         </tr>`

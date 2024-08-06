@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async function () {
-    await showUserEmailOnNavbar()
+    await showUserNameOnNavbar()
     await fillTableOfAllUsers();
     await fillTableAboutCurrentUser();
     await addNewUserForm();
@@ -10,11 +10,11 @@ document.addEventListener('DOMContentLoaded', async function () {
 const ROLE_USER = {id: 1, name: "ROLE_USER"};
 const ROLE_ADMIN = {id: 2, name: "ROLE_ADMIN"};
 
-async function showUserEmailOnNavbar() {
-    const currentUserEmailNavbar = document.getElementById("currentUserEmailNavbar")
+async function showUserNameOnNavbar() {
+    const currentUserNameNavbar = document.getElementById("currentUserNameNavbar")
     const currentUser = await dataAboutCurrentUser();
-    currentUserEmailNavbar.innerHTML =
-        `<strong>${currentUser.email}</strong>
+    currentUserNameNavbar.innerHTML =
+        `<strong>${currentUser.username}</strong>
                  with roles: 
                  ${currentUser.roles.map(role => role.shortName).join(' ')}`;
 }

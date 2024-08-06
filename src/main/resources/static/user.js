@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async function () {
-    await showUserEmailOnNavbar()
+    await showUserNameOnNavbar()
     await fillTableAboutUser();
 });
 
@@ -15,20 +15,20 @@ async function fillTableAboutUser(){
     currentUserTableHTML +=
         `<tr>
             <td>${currentUser.id}</td>
-            <td>${currentUser.firstName}</td>
+            <td>${currentUser.username}</td>
             <td>${currentUser.lastName}</td>
-            <td>${currentUser.age}</td>
+            <td>${currentUser.year}</td>
             <td>${currentUser.email}</td>
             <td>${currentUser.roles.map(role => role.shortName).join(' ')}</td>
         </tr>`
     currentUserTable1.innerHTML = currentUserTableHTML;
 }
 
-async function showUserEmailOnNavbar() {
-    const currentUserEmailNavbar = document.getElementById("currentUserEmailNavbar")
+async function showUserNameOnNavbar() {
+    const currentUserNameNavbar = document.getElementById("currentUserEmailNavbar")
     const currentUser = await dataAboutCurrentUser();
-    currentUserEmailNavbar.innerHTML =
-        `<strong>${currentUser.email}</strong>
+    currentUserNameNavbar.innerHTML =
+        `<strong>${currentUser.username}</strong>
                  with roles: 
                  ${currentUser.roles.map(role => role.shortName).join(' ')}`;
 }
