@@ -1,11 +1,7 @@
 package ru.kata.spring.boot_security.demo.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.kata.spring.boot_security.demo.utils.UserUtil;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +16,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -28,46 +25,30 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @JsonProperty("id")
-    private long id;
+    private Long id;
 
-    @Size(min = 2, max = 50, message = "Слишком короткое или длинное имя")
+
+    @Size(min = 2, max = 50)
     @Column(name = "username", unique = true, nullable = false)
-    @JsonProperty("username")
     private String username;
 
-    @Size(min = 2, max = 50, message = "Слишком короткая или длинная фамилия")
-    @Column(name = "lastname")
-    @JsonProperty("lastName")
+    @Size(min = 2, max = 50)
+    @Column(name = "lastName")
     private String lastName;
 
-    @Min(value = 0, message = "Год не может быть меньше 0")
-    @Column(name = "year")
-    @JsonProperty("year")
-    private int year;
-
-    @Size(min = 3, message = "Не менее 3-х знаков")
+    @Size(min = 3)
     @Column(name = "password")
-    @JsonProperty("password")
     private String password;
 
-    @Size(min = 5, message = "Слишком короткий e'mail")
+    @Size(min = 2)
     @Column(name = "email")
-    @JsonProperty("email")
     private String email;
 
-    public User(Long id, String username, String lastName, int year, String password, Collection<Role> authorities, String email) {
-        this.id = id;
-        this.username = username;
-        this.lastName = lastName;
-        this.year = year;
-        this.password = password;
-        this.authorities = authorities;
-        this.email = email;
-    }
+    @Min(value = 0)
+    @Column(name = "year")
+    private int year;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @Cascade({CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -76,16 +57,46 @@ public class User implements UserDetails {
     public User() {
     }
 
+    public User(String username, String lastName, String password, String email, int year, Set<Role> authorities) {
+        this.username = username;
+        this.lastName = lastName;
+        this.password = password;
+        this.email = email;
+        this.year = year;
+        this.authorities = authorities;
+    }
+
     @Override
     public Collection<Role> getAuthorities() {
-        return authorities; //из пачки ролей делает пачку авторитис с такими же строками
+        return authorities;
     }
 
-    public String getStringRole() {
-        return UserUtil.getStringRoles(authorities);
+    @Override
+    public String getUsername() {
+        return username;
     }
 
-    public long getId() {
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public Long getId() {
         return id;
     }
 
@@ -97,20 +108,27 @@ public class User implements UserDetails {
         this.username = username;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public int getYear() {
         return year;
     }
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setAuthorities(Collection<Role> authorities) {
+        this.authorities = authorities;
     }
 
     public String getEmail() {
@@ -121,58 +139,11 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    @Override
-    public String getPassword() {
-        return password;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setAuthorities(Collection<Role> authorities) {
-        this.authorities = authorities;
-    }
-
-    @JsonIgnore
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    @JsonIgnore
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @JsonIgnore
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @JsonIgnore
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @JsonIgnore
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", year=" + year +
-                ", password='" + password + '\'' +
-                ", authorities=" + authorities +
-                '}';
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

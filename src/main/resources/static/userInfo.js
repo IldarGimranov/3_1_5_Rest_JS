@@ -8,7 +8,7 @@ async function dataAboutCurrentUser() {
     return await response.json();
 }
 async function fillTableAboutUser(){
-    const currentUserTable1 = document.getElementById("currentUserTable");
+    const currentUserTable = document.getElementById("currentUserTable");
     const currentUser = await dataAboutCurrentUser();
 
     let currentUserTableHTML = "";
@@ -17,18 +17,18 @@ async function fillTableAboutUser(){
             <td>${currentUser.id}</td>
             <td>${currentUser.username}</td>
             <td>${currentUser.lastName}</td>
-            <td>${currentUser.year}</td>
             <td>${currentUser.email}</td>
-            <td>${currentUser.roles.map(role => role.shortName).join(' ')}</td>
+            <td>${currentUser.year}</td>
+            <td>${currentUser.authorities.map(role => role.name.substring(5).concat(" ")).toString().replaceAll(",", "")}</td>
         </tr>`
-    currentUserTable1.innerHTML = currentUserTableHTML;
+    currentUserTable.innerHTML = currentUserTableHTML;
 }
 
 async function showUserNameOnNavbar() {
-    const currentUserNameNavbar = document.getElementById("currentUserEmailNavbar")
+    const currentUserEmailNavbar = document.getElementById("currentUserEmailNavbar")
     const currentUser = await dataAboutCurrentUser();
-    currentUserNameNavbar.innerHTML =
+    currentUserEmailNavbar.innerHTML =
         `<strong>${currentUser.username}</strong>
                  with roles: 
-                 ${currentUser.roles.map(role => role.shortName).join(' ')}`;
+                 ${currentUser.authorities.map(role => role.name.substring(5).concat(" ")).toString().replaceAll(",", "")}`;
 }

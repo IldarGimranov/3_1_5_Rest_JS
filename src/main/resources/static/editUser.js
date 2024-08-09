@@ -1,7 +1,11 @@
+async function getRoles() {
+    const response = await fetch(`/api/users/roles`);
+    return await response.json();
+}
 
-async function sendDataEditUser(user, userId) {
-    await fetch(`/api/admin/${userId}`,
-        {method: "PUT", headers: {'Content-type': 'application/json'}, body: JSON.stringify(user)})
+async function sendDataEditUser(user) {
+    await fetch("/api/users" ,
+        {method:"PUT", headers: {'Content-type': 'application/json'}, body: JSON.stringify(user)} )
 }
 
 const modalEdit = document.getElementById("editModal");
@@ -10,17 +14,20 @@ async function EditModalHandler() {
     await fillModal(modalEdit);
 }
 
-modalEdit.addEventListener("submit", async function (event) {
+modalEdit.addEventListener("submit", async function(event){
     event.preventDefault();
 
     const rolesSelected = document.getElementById("rolesEdit");
 
+    let allRole = await getRoles();
+    let AllRoles = {};
+    for (let role of allRole) {
+        AllRoles[role.name] = role.id;
+    }
     let roles = [];
     for (let option of rolesSelected.selectedOptions) {
-        if (option.value === ROLE_USER.name) {
-            roles.push(ROLE_USER);
-        } else if (option.value === ROLE_ADMIN.name) {
-            roles.push(ROLE_ADMIN);
+        if (Object.keys(AllRoles).indexOf(option.value) != -1) {
+            roles.push({roleId: AllRoles[option.value], name: option.value});
         }
     }
 
@@ -28,15 +35,13 @@ modalEdit.addEventListener("submit", async function (event) {
         id: document.getElementById("idEdit").value,
         username: document.getElementById("usernameEdit").value,
         lastName: document.getElementById("lastNameEdit").value,
-        year: document.getElementById("yearEdit").value,
-        email: document.getElementById("emailEdit").value,
         password: document.getElementById("passwordEdit").value,
-        roles: roles
+        email: document.getElementById("emailEdit").value,
+        year: document.getElementById("yearEdit").value,
+        authorities: roles
     }
 
-    const userId = user.id;
-
-    await sendDataEditUser(user, userId);
+    await sendDataEditUser(user);
     await fillTableOfAllUsers();
 
     const modalBootstrap = bootstrap.Modal.getInstance(modalEdit);

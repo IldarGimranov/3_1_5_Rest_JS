@@ -8,16 +8,17 @@ import org.springframework.web.servlet.resource.PathResourceResolver;
 
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/user").setViewName("user");
-        registry.addViewController("/welcome").setViewName("index");
-        registry.addViewController("/login").setViewName("login");
-    }
-
+    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**")
-                .addResourceLocations("classpath:/js/")
+                .addResourceLocations("classpath:/static/")
                 .resourceChain(true)
-                .addResolver(new PathResourceResolver());;
+                .addResolver(new PathResourceResolver());
+    }
+
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/user").setViewName("userInfo");
+        registry.addViewController("/welcome").setViewName("index");
+        registry.addViewController("/login").setViewName("login");
     }
 }

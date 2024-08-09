@@ -1,6 +1,13 @@
+async function getRoles() {
+    const response = await fetch("/api/users/roles");
+    return await response.json();
+}
+
+
 async function createNewUser(user) {
-    await fetch("/api/admin",
+    await fetch("/api/users",
         {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(user)})
+
 }
 
 async function addNewUserForm() {
@@ -9,30 +16,36 @@ async function addNewUserForm() {
     newUserForm.addEventListener('submit', async function (event) {
         event.preventDefault();
 
-        const username = newUserForm.querySelector("#userName").value.trim();
+        const name = newUserForm.querySelector("#username").value.trim();
         const lastName = newUserForm.querySelector("#lastName").value.trim();
-        const year = newUserForm.querySelector("#year").value.trim();
-        const email = newUserForm.querySelector("#email").value.trim();
         const password = newUserForm.querySelector("#password").value.trim();
+        const email = newUserForm.querySelector("#email").value.trim();
+        const year = newUserForm.querySelector("#year").value.trim();
 
         const rolesSelected = document.getElementById("authorities");
 
-        let roles = [];
+
+
+        let allRole = await getRoles();
+        let AllRoles = {};
+        for (let role of allRole) {
+            AllRoles[role.name] = role.id;
+        }
+        let authorities = [];
         for (let option of rolesSelected.selectedOptions) {
-            if (option.value === ROLE_USER.name) {
-                roles.push(ROLE_USER);
-            } else if (option.value === ROLE_ADMIN.name) {
-                roles.push(ROLE_ADMIN, ROLE_USER);
+            if (Object.keys(AllRoles).indexOf(option.value) != -1) {
+                authorities.push({roleId: AllRoles[option.value], name: option.value});
             }
         }
 
+
         const newUserData = {
-            username: username,
+            username: name,
             lastName: lastName,
-            year: year,
-            email: email,
             password: password,
-            roles: roles
+            email: email,
+            year: year,
+            authorities: authorities
         };
 
         await createNewUser(newUserData);

@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class AppHomeController {
 
     @GetMapping("/admin")
-    public String showIndexPageAdmin() {
-        return "admin_page";
+    public String showAdminPage() {
+        return "adminPage";
     }
 
     @GetMapping("/user")
-    public String showIndexPageUser() {
-        return "user";
+    public String showUserPage() {
+        return "userInfo";
     }
 
 }

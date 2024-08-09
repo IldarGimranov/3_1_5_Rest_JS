@@ -1,7 +1,5 @@
 package ru.kata.spring.boot_security.demo.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Column;
@@ -13,7 +11,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.Collection;
-import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -21,14 +18,12 @@ public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty("id")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "name")
-    @JsonProperty("username")
-    private String username;
+    private String name;
 
-    @JsonIgnore
     @Transient
     @ManyToMany(mappedBy = "authorities")
     private Collection<User> users;
@@ -36,9 +31,13 @@ public class Role implements GrantedAuthority {
     public Role() {
     }
 
-    public Role(Long id, String username) {
-        //this.id = id;
-        this.username = username;
+    public Role(Long id) {
+        this.id = id;
+    }
+
+    public Role(Long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public Long getId() {
@@ -49,38 +48,22 @@ public class Role implements GrantedAuthority {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String name) {
-        this.username = username;
-    }
-
-    public Collection<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String getAuthority() {
-        //return getName();
-        return username;
-    }
-
-    public String getShortUsername() {
-        return username.substring(5);
+        return name;
     }
 
     @Override
     public String toString() {
-        return "Role{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", users=" + users +
-                '}';
+        return name.substring(5);
     }
+
 }

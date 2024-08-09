@@ -1,5 +1,6 @@
+
 async function dataAboutAllUsers() {
-    const response = await fetch("/api/admin");
+    const response = await fetch("/api/users");
     return await response.json();
 }
 
@@ -8,9 +9,11 @@ async function dataAboutCurrentUser() {
     return await response.json();
 }
 
+
 async function fillTableOfAllUsers() {
-    const usersTable = document.getElementById("usersTable");
+    const usersTable = document.getElementById("usersTableId");
     const users = await dataAboutAllUsers();
+
 
     let usersTableHTML = "";
     for (let user of users) {
@@ -19,18 +22,18 @@ async function fillTableOfAllUsers() {
                 <td>${user.id}</td>
                 <td>${user.username}</td>
                 <td>${user.lastName}</td>
+                <td>${user.email}</td>
                 <td>${user.year}</td>
-                <td>${user.password}</td>
-                <td>${user.roles.map(role => role.shortName).join(' ')}</td>
+               <td>${user.authorities.map(role => role.name.substring(5).concat(" ")).toString().replaceAll(",", "")}</td>
                 <td>
-                    <button class="btn btn-info btn-sm text-white"
+                    <button class="btn btn-primary"
                             data-bs-toggle="modal"
                             data-bs-target="#editModal"
                             data-user-id="${user.id}">
                         Edit</button>
                 </td>
                 <td>
-                    <button class="btn btn-danger btn-sm btn-delete"
+                    <button class="btn btn-danger"
                             data-bs-toggle="modal"
                             data-bs-target="#deleteModal"
                             data-user-id="${user.id}">                     
@@ -40,6 +43,7 @@ async function fillTableOfAllUsers() {
     }
     usersTable.innerHTML = usersTableHTML;
 }
+
 
 async function fillTableAboutCurrentUser(){
     const currentUserTable = document.getElementById("currentUserTable");
@@ -51,9 +55,9 @@ async function fillTableAboutCurrentUser(){
             <td>${currentUser.id}</td>
             <td>${currentUser.username}</td>
             <td>${currentUser.lastName}</td>
+            <td>${currentUser.email}</td>
             <td>${currentUser.year}</td>
-            <td>${currentUser.password}</td>
-            <td>${currentUser.roles.map(role => role.shortName).join(' ')}</td>
+            <td>${currentUser.authorities.map(role => role.name.substring(5).concat(" ")).toString().replaceAll(",", "")}</td>
         </tr>`
     currentUserTable.innerHTML = currentUserTableHTML;
 }

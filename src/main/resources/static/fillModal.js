@@ -1,8 +1,7 @@
 async function getUserDataById(userId) {
-    const response = await fetch(`/api/admin/${userId}`);
+    const response = await fetch(`/api/users/${userId}`);
     return await response.json();
 }
-
 async function fillModal(modal) {
 
     modal.addEventListener("show.bs.modal", async function(event) {
@@ -15,9 +14,9 @@ async function fillModal(modal) {
         const idInput = modalBody.querySelector("input[data-user-id='id']");
         const usernameInput = modalBody.querySelector("input[data-user-id='username']");
         const lastNameInput = modalBody.querySelector("input[data-user-id='lastName']");
-        const yearInput = modalBody.querySelector("input[data-user-id='year']");
-        const emailInput = modalBody.querySelector("input[data-user-id='email']");
         const passwordInput = modalBody.querySelector("input[data-user-id='password']");
+        const emailInput = modalBody.querySelector("input[data-user-id='email']");
+        const yearInput = modalBody.querySelector("input[data-user-id='year']");
         if (passwordInput !== null) {
             passwordInput.value = user.password;
         }
@@ -37,9 +36,10 @@ async function fillModal(modal) {
 
         if (rolesSelectDelete !== null) {
             rolesSelect = rolesSelectDelete;
-            for (let i = 0; i < user.roles.length; i++) {
+            for (let i = 0; i < user.authorities.length; i++) {
                 userRolesHTML +=
-                    `<option value="${user.roles[i].name}">${user.roles[i].shortName}</option>`;
+                    `<option value="${user.authorities[i].name}">${user.authorities[i]
+                        .substring(5).concat(" ").toString().replaceAll(",", "")}</option>`;
             }
         } else if (rolesSelectEdit !== null) {
             rolesSelect = rolesSelectEdit;
